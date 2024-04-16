@@ -87,69 +87,70 @@ class AuthController extends GetxController {
 
   // LOGIN
   Future<void> userLogin(BuildContext context) async {
-    // Get.to(() => HomePage());
+    Get.to(() => HomePage());
+    return;
 
-    if (formKey.currentState!.validate()) {
-      // show progress dialog
-      showProgressDialog(context);
+    // if (formKey.currentState!.validate()) {
+    //   // show progress dialog
+    //   showProgressDialog(context);
 
-      try {
-        isLoading.value = true;
+    //   try {
+    //     isLoading.value = true;
 
-        final response = await http.post(Uri.parse("$baseUrl/login"), body: {
-          "phone": phoneNo.value,
-          "password": passwordTextEditingController.text,
-        });
+    //     final response = await http.post(Uri.parse("$baseUrl/login"), body: {
+    //       "phone": phoneNo.value,
+    //       "password": passwordTextEditingController.text,
+    //     });
 
-        if (response.statusCode == 200) {
-          isLoading.value = false;
+    //     if (response.statusCode == 200) {
+    //       isLoading.value = false;
 
-          final responseData = json.decode(response.body);
-          SharedPreferences prefs = await SharedPreferences.getInstance();
+    //       final responseData = json.decode(response.body);
+    //       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-          prefs.setString('token', responseData['token']);
-          prefs.setInt("userId", responseData["user"]["id"]);
-          prefs.setString(
-              "firstName", responseData["user"]["firstName"] ?? 'Anonymous');
-          prefs.setString(
-              "lastName", responseData["user"]["lastName"] ?? 'Anonymous');
-          prefs.setString("phone", responseData["user"]["phone"]);
-          prefs.setString("email",
-              responseData["user"]["email"] ?? 'anonymous@pixelinsurance.co');
+    //       prefs.setString('token', responseData['token']);
+    //       prefs.setInt("userId", responseData["user"]["id"]);
+    //       prefs.setString(
+    //           "firstName", responseData["user"]["firstName"] ?? 'Anonymous');
+    //       prefs.setString(
+    //           "lastName", responseData["user"]["lastName"] ?? 'Anonymous');
+    //       prefs.setString("phone", responseData["user"]["phone"]);
+    //       prefs.setString("email",
+    //           responseData["user"]["email"] ?? 'anonymous@pixelinsurance.co');
 
-          // ignore: use_build_context_synchronously
-          hideProgressDialog(context);
+    //       // ignore: use_build_context_synchronously
+    //       hideProgressDialog(context);
 
-          Get.to(() => HomePage());
-        } else {
-          isLoading.value = false;
-          
-          // ignore: use_build_context_synchronously
-          hideProgressDialog(context);
+    //       Get.to(() => HomePage());
+    //     } else {
+    //       isLoading.value = false;
 
-          print(response.body);
-          Get.snackbar(
-            'Error',
-            'Incorrect username or password.',
-            leftBarIndicatorColor: fail,
-          );
-        }
-      } catch (e) {
-        print(e);
-        return;
-      }
-    } else {
-      isLoading.value = false;
+    //       // ignore: use_build_context_synchronously
+    //       hideProgressDialog(context);
 
-      // ignore: use_build_context_synchronously
-      hideProgressDialog(context);
+    //       print(response.body);
+    //       Get.snackbar(
+    //         'Error',
+    //         'Incorrect username or password.',
+    //         leftBarIndicatorColor: fail,
+    //       );
+    //     }
+    //   } catch (e) {
+    //     print(e);
+    //     return;
+    //   }
+    // } else {
+    //   isLoading.value = false;
 
-      Get.snackbar(
-        'Error',
-        'Please enter username and password.',
-        leftBarIndicatorColor: fail,
-      );
-    }
+    //   // ignore: use_build_context_synchronously
+    //   hideProgressDialog(context);
+
+    //   Get.snackbar(
+    //     'Error',
+    //     'Please enter username and password.',
+    //     leftBarIndicatorColor: fail,
+    //   );
+    // }
   }
 
   // RESET PASSWORD
